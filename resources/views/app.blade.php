@@ -6,7 +6,8 @@
     <title>Survey Coding Challenge</title>
 
     @viteReactRefresh
-    @vite(['resources/css/app.css', 'resources/js/main.tsx'])
+    {{-- @vite(['resources/css/app.css', 'resources/js/main.tsx']) --}}
+    @vite(['resources/js/main.tsx'])
 </head>
 <body>
     <div id="app"></div>
