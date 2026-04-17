@@ -1,57 +1,46 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
-interface QuestionAnswer {
+interface Question {
+    id: number;
+    type: 'radio' | 'checkbox';
+    name: string;
+    options: QuestionOption[];
+}
+
+interface QuestionOption {
+    id: number;
+    question_id: number;
+    value: string;
+    order: number | null;
+}
+
+interface Answer {
     question_id: number;
     value: string[];
+}
+
+const fetchQuestions = async (): Promise<Question[]> => {
+    const response = await fetch('/api/questions');
+
+    if (!response.ok) {
+        throw new Error('Failed to fetch questions');
+    }
+
+    return await response.json();
 }
 
 export const Form = () => {
     const [isSubmitted, setIsSubmitted] = useState(false);
     const [hasError, setHasError] = useState(false);
+    const [questions, setQuestions] = useState<Question[]>([]);
 
-    const questions = [
-        {
-            id: 1,
-            type: 'radio',
-            name: 'How old are you?',
-            options: [
-                {
-                    id: 1,
-                    question_id: 1,
-                    value: 'Less than 18',
-                },
-                {
-                    id: 2,
-                    question_id: 1,
-                    value: '18-99',
-                },
-                {
-                    id: 3,
-                    question_id: 1,
-                    value: 'More than 99',
-                },
-            ]
-        },
-        {
-            id: 2,
-            type: 'checkbox',
-            name: 'What countries have you visited?',
-            options: [
-                {
-                    id: 1,
-                    question_id: 2,
-                    value: 'Spain',
-                },
-                {
-                    id: 2,
-                    question_id: 2,
-                    value: 'France',
-                }
-            ]
-        }
-    ]
+    const [answers, setAnswers] = useState<Answer[]>([])
 
-    const [answers, setAnswers] = useState<QuestionAnswer[]>([])
+    useEffect(() => {
+        fetchQuestions().then((questions) => {
+            setQuestions(questions);
+        });
+    }, []);
 
     const handleRadioChange = (e: React.ChangeEvent<HTMLInputElement>, questionId: number) => {
         let isAlreadyAnswered = answers.find((answer) => answer.question_id === questionId) !== undefined
@@ -76,7 +65,7 @@ export const Form = () => {
                 setAnswers([...answers, { question_id: questionId, value: [e.target.value] }])
             } else {
                 // update existing answer
-                setAnswers(answers.map((answer): QuestionAnswer => {
+                setAnswers(answers.map((answer): Answer => {
                     return answer.question_id === questionId
                         ? { ...answer, value: [...answer.value, e.target.value] }
                         : answer
@@ -131,7 +120,15 @@ export const Form = () => {
         setIsSubmitted(true);
     }
 
-    const form =
+    if (hasError) {
+        return <p>There was a problem submitting the form.</p>;
+    }
+
+    if (isSubmitted) {
+        return <p>Form submitted successfully.</p>;
+    }
+
+    return (
         <form onSubmit={handleSubmit}>
             {questions.map((question) => {
                 return (
@@ -181,15 +178,5 @@ export const Form = () => {
 
             <button>Submit</button>
         </form>
-
-
-    if (hasError) {
-        return <p>There was a problem submitting the form.</p>;
-    }
-
-    if (isSubmitted) {
-        return <p>Form submitted successfully.</p>;
-    }
-
-    return form;
+    );
 }
