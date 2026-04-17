@@ -7,6 +7,7 @@ interface QuestionAnswer {
 
 export const Form = () => {
     const [isSubmitted, setIsSubmitted] = useState(false);
+    const [hasError, setHasError] = useState(false);
 
     const questions = [
         {
@@ -93,7 +94,7 @@ export const Form = () => {
                 })
 
                 // remove unchecked option from answer
-                updatedAnswers = updatedAnswers.map(answer => 
+                updatedAnswers = updatedAnswers.map(answer =>
                     answer.question_id !== questionId
                         ? answer
                         : {
@@ -113,6 +114,7 @@ export const Form = () => {
         console.log('you submitted the form');
 
         const url = '/api/responses'
+
         const response = await fetch(url, {
             method: 'POST',
             body: JSON.stringify(answers),
@@ -122,7 +124,8 @@ export const Form = () => {
         })
 
         if (!response.ok) {
-            throw new Error(`Response status: ${response.status}`);
+            setHasError(true);
+            return;
         }
 
         setIsSubmitted(true);
@@ -179,5 +182,14 @@ export const Form = () => {
             <button>Submit</button>
         </form>
 
-    return isSubmitted ? <p>Form submitted</p> : form;
+
+    if (hasError) {
+        return <p>There was a problem submitting the form.</p>;
+    }
+
+    if (isSubmitted) {
+        return <p>Form submitted successfully.</p>;
+    }
+
+    return form;
 }
