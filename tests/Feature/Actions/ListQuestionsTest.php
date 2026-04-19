@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Tests\Feature;
+namespace Tests\Feature\Actions;
 
 use App\Actions\ListQuestions;
 use App\Models\Question;
@@ -16,27 +16,6 @@ class ListQuestionsTest extends TestCase
 {
     use RefreshDatabase;
 
-    /**
-     * $action = new ListQuestions();
-     * $action->handle()
-     *
-     * output is Collection<Question>
-     *
-     * [
-     *     id
-     *     type
-     * ]
-     *
-     * scenairos:
-     * - no questions in database
-     * - radio questions
-     * - mixed questions
-     * - one or more questions with options
-     */
-
-    /**
-     * A basic feature test example.
-     */
     public function test_success_no_questions(): void
     {
         $this->assertCount(0, Question::all());

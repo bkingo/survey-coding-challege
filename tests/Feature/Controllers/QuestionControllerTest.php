@@ -31,7 +31,8 @@ class QuestionControllerTest extends TestCase
             ]);
 
 
-        $response = $this->get('/api/questions');
+        $response = $this->getJson('/api/questions');
+        $response->assertStatus(200);
         $response->assertJson([
             [
                 'id' => $question->id,
@@ -43,10 +44,9 @@ class QuestionControllerTest extends TestCase
                         'question_id' => $question->id,
                         'value' => 'Yes',
                         'order' => 0,
-                    ]
-                ]
-            ]
+                    ],
+                ],
+            ],
         ]);
-        $response->assertStatus(200);
     }
 }
