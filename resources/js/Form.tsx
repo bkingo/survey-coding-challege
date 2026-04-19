@@ -31,9 +31,8 @@ const fetchQuestions = async (): Promise<Question[]> => {
 
 export const Form = () => {
     const [isSubmitted, setIsSubmitted] = useState(false);
-    const [hasError, setHasError] = useState(false);
+    const [errors, setErrors] = useState('');
     const [questions, setQuestions] = useState<Question[]>([]);
-
     const [answers, setAnswers] = useState<Answer[]>([])
 
     useEffect(() => {
@@ -94,34 +93,41 @@ export const Form = () => {
 
                 setAnswers(updatedAnswers);
             }
-
         }
     }
 
     const handleSubmit = async (e: React.SubmitEvent<HTMLFormElement>) => {
         e.preventDefault();
-        console.log('you submitted the form');
-
+        
         const url = '/api/responses'
 
         const response = await fetch(url, {
             method: 'POST',
             body: JSON.stringify(answers),
             headers: {
-                "Content-Type": "application/json",
+                'Content-Type': 'application/json',
+                'Accept': 'application/json',
             }
         })
 
         if (!response.ok) {
-            setHasError(true);
+            if (response.status >= 400 && response.status < 500) {
+                const data = await response.json();
+                setErrors(data.message);
+            }
             return;
         }
 
         setIsSubmitted(true);
     }
 
-    if (hasError) {
-        return <p>There was a problem submitting the form.</p>;
+    if (errors) {
+        return (
+            <>
+                <p>There was a problem submitting the form: <span style={{ color: 'red' }}>{errors}</span></p>
+                <p>Please reload the page.</p>
+            </>
+        )
     }
 
     if (isSubmitted) {

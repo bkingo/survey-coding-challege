@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\QuestionController;
+use App\Http\Controllers\ResponseController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
@@ -9,4 +10,6 @@ Route::get('/', function () {
 
 Route::prefix('api')->group(function () {
     Route::get('/questions', [QuestionController::class, 'index']);
+
+    Route::post('/responses', [ResponseController::class, 'store']);
 });
