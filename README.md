@@ -67,9 +67,6 @@ Most picked answers by sad people:
 
 ---
 
-# How to interact with this project
-
-
 ## How to interact with this project
 
 From the project root, install dependencies once:
