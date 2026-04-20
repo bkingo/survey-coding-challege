@@ -1,58 +1,66 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+# Survey coding challenge
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+## Step 1: Build a survey form
 
-## About Laravel
+You will need to build a simple survey form.
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+The questions and answers of the survey should come from a database so it is possible to add, edit, remove and reorder questions and answers only by adding, editing, and deleting records from the database (with no need to touch the code or change the database schema).
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+There are two types of questions: radio (single answer) and checkboxes (multiple choice).
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+The completed survey will be saved in the database. Many users can submit the survey.
 
-## Learning Laravel
+Insert these questions into your database (You don't need to build an admin page. You can simply insert with SQL queries):
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+- **How old are you?** (radio)
+  - Less than 18
+  - 18-99
+  - More than 99
+- **Are you happy?** (radio)
+  - Yes
+  - No
+- **What countries have you visited?** (checkboxes)
+  - Spain
+  - France
+  - Italy
+  - England
+  - Portugal
+- **What is your favorite sport?** (radio)
+  - Football
+  - Basketball
+  - Soccer
+  - Volleyball
+- **What programming languages do you know?** (checkboxes)
+  - PHP
+  - Ruby
+  - JavaScript
+  - Python
 
-In addition, [Laracasts](https://laracasts.com) contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+## Step 2: Build a survey results page to investigate user happiness
 
-You can also watch bite-sized lessons with real-world projects on [Laravel Learn](https://laravel.com/learn), where you will be guided through building a Laravel application from scratch while learning PHP fundamentals.
+Build a simple page that shows for each question, what is the most popular answer for happy users and what is the most popular answer for sad users.
 
-## Agentic Development
+Example results page:
 
-Laravel's predictable structure and conventions make it ideal for AI coding agents like Claude Code, Cursor, and GitHub Copilot. Install [Laravel Boost](https://laravel.com/docs/ai) to supercharge your AI workflow:
-
-```bash
-composer require laravel/boost --dev
-
-php artisan boost:install
+```text
+--------------------------------
+RESULTS:
+Most picked answers by happy people:
+- How old are you? => More than 99
+- Are you happy? => Yes
+- What countries have you visited? => France
+- What is your favorite sport? => Soccer
+- What programming languages do you know? => Ruby
+Most picked answers by sad people:
+- How old are you? => 18-99
+- Are you happy? => No
+- What countries have you visited? => France
+- What is your favorite sport? => Football
+- What programming languages do you know? => PHP
 ```
 
-Boost provides your agent 15+ tools and skills that help agents build Laravel applications while following best practices.
+## Notes
 
-## Contributing
-
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
-
-## Code of Conduct
-
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
-
-## Security Vulnerabilities
-
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
-
-## License
-
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+- You might need to "cut corners" to make this work in just 4 hours. The DB Schema is not the right place to cut corners, please make a proper DB schema and do not make a "bad" DB design just to make your life easier for step 2!
+- The primary goal is to see you complete the project within the time given. Do not over-engineer.
+- After you're finished you will sit down with one of our engineers to discuss and review your code.
