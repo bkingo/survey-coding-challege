@@ -111,7 +111,7 @@ export const Form = () => {
         })
 
         if (!response.ok) {
-            if (response.status >= 400 && response.status < 500) {
+            if (response.status >= 400) {
                 const data = await response.json();
                 setErrors(data.message);
             }
@@ -141,6 +141,7 @@ export const Form = () => {
                     <fieldset key={question.id}>
                         <legend>{question.name}</legend>
 
+                        {/* TODO: add sorting based on question order */}
                         {question.options.map((option) => {
                             if (question.type === 'radio') {
                                 return (
