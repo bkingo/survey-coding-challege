@@ -64,3 +64,32 @@ Most picked answers by sad people:
 - You might need to "cut corners" to make this work in just 4 hours. The DB Schema is not the right place to cut corners, please make a proper DB schema and do not make a "bad" DB design just to make your life easier for step 2!
 - The primary goal is to see you complete the project within the time given. Do not over-engineer.
 - After you're finished you will sit down with one of our engineers to discuss and review your code.
+
+---
+
+# How to interact with this project
+
+
+## How to interact with this project
+
+From the project root, install dependencies once:
+
+- `composer install` — PHP packages  
+- `npm install` — front-end packages  
+
+After that, run the site the way you normally do for this codebase, then use the routes below from your site’s base URL (for example if the site is `http://localhost:8000`, then `/form` is `http://localhost:8000/form`).
+
+### UI (browser)
+
+| URL | What it does |
+| --- | --- |
+| `/form` | Survey form: answer the questions and submit. |
+| `/results` | Survey results: see the most common answers for happy vs sad respondents. |
+
+### API (JSON)
+
+| Method and URL    | What it does |
+|-------------------|-------------------------------------------------------------------|
+| `GET /api/questions`   | Retrieves all survey questions along with possible answer options. |
+| `POST /api/responses`  | Submits a user’s completed survey. Expects a JSON body matching the form structure. |
+| `GET /api/results`     | Returns aggregated survey results, highlighting the most popular answers separately for happy and sad users. |
